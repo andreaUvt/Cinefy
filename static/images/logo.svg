@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 220.74 65.72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#Light_Spectrum_-5);
+      }
+
+      .cls-2 {
+        letter-spacing: .3em;
+      }
+
+      .cls-3 {
+        fill: url(#Violet);
+      }
+
+      .cls-4 {
+        letter-spacing: .3em;
+      }
+
+      .cls-5 {
+        fill: url(#Red_Violet-2);
+      }
+
+      .cls-6 {
+        fill: url(#Red_Violet-7);
+      }
+
+      .cls-7 {
+        fill: url(#Red_Violet-4);
+      }
+
+      .cls-8 {
+        fill: url(#Red_Violet-3);
+      }
+
+      .cls-9 {
+        fill: url(#Violet-3);
+      }
+
+      .cls-10 {
+        fill: none;
+        font-size: 20.92px;
+        letter-spacing: .5em;
+      }
+
+      .cls-10, .cls-11 {
+        font-family: Antonio-Bold, Antonio;
+        font-weight: 700;
+      }
+
+      .cls-11 {
+        fill: #fff;
+        font-size: 15.11px;
+      }
+
+      .cls-12 {
+        fill: url(#Light_Spectrum_-2);
+      }
+
+      .cls-13 {
+        fill: url(#Light_Spectrum_);
+      }
+
+      .cls-14 {
+        fill: url(#Light_Spectrum_-7);
+      }
+
+      .cls-15 {
+        letter-spacing: .3em;
+      }
+
+      .cls-16 {
+        fill: url(#Red_Violet);
+      }
+
+      .cls-17 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-18 {
+        fill: url(#Light_Spectrum_-6);
+      }
+
+      .cls-19 {
+        fill: url(#Light_Spectrum_-3);
+      }
+
+      .cls-20 {
+        fill: url(#Red_Violet-6);
+      }
+
+      .cls-21 {
+        fill: url(#Red_Violet-5);
+      }
+
+      .cls-22 {
+        fill: url(#Light_Spectrum_-4);
+      }
+
+      .cls-23 {
+        fill: url(#Violet-2);
+      }
+    </style>
+    <clipPath id="clippath">
+      <text class="cls-10" transform="translate(81.22 31.36)"><tspan x="0" y="0">PODCAST</tspan></text>
+    </clipPath>
+    <linearGradient id="Violet" x1="74.87" y1="22.78" x2="218.29" y2="22.78" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c6c4da"/>
+      <stop offset=".5" stop-color="#afadca"/>
+      <stop offset=".54" stop-color="#acaac8"/>
+      <stop offset="1" stop-color="#9693b8"/>
+    </linearGradient>
+    <linearGradient id="Violet-2" data-name="Violet" x1="0" y1="32.86" x2="71.51" y2="32.86" xlink:href="#Violet"/>
+    <linearGradient id="Light_Spectrum_" data-name="Light Spectrum " x1="19.16" y1="32.6" x2="20.71" y2="32.6" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c6ddea"/>
+      <stop offset=".2" stop-color="#b9b6d3"/>
+      <stop offset=".4" stop-color="#e5c7d6"/>
+      <stop offset=".6" stop-color="#e7c5b3"/>
+      <stop offset=".8" stop-color="#f4f2cb"/>
+      <stop offset="1" stop-color="#c8ddc7"/>
+    </linearGradient>
+    <linearGradient id="Red_Violet" data-name="Red Violet" x1="17.76" y1="35.26" x2="22.1" y2="35.26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ccbfd4"/>
+      <stop offset=".5" stop-color="#baa8c4"/>
+      <stop offset="1" stop-color="#ab93b5"/>
+    </linearGradient>
+    <linearGradient id="Light_Spectrum_-2" data-name="Light Spectrum " x1="24.58" y1="29.28" x2="26.12" y2="29.28" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-2" data-name="Red Violet" x1="23.18" y1="30.17" x2="27.52" y2="30.17" xlink:href="#Red_Violet"/>
+    <linearGradient id="Light_Spectrum_-3" data-name="Light Spectrum " x1="29.99" y1="23.39" x2="31.54" y2="23.39" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-3" data-name="Red Violet" x1="28.6" y1="22.78" x2="32.93" y2="22.78" xlink:href="#Red_Violet"/>
+    <linearGradient id="Light_Spectrum_-4" data-name="Light Spectrum " x1="35.41" y1="27.85" x2="36.96" y2="27.85" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-4" data-name="Red Violet" x1="34.02" y1="36.44" x2="38.35" y2="36.44" xlink:href="#Red_Violet"/>
+    <linearGradient id="Light_Spectrum_-5" data-name="Light Spectrum " x1="40.83" y1="25.14" x2="42.38" y2="25.14" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-5" data-name="Red Violet" x1="39.44" y1="17.95" x2="43.77" y2="17.95" xlink:href="#Red_Violet"/>
+    <linearGradient id="Light_Spectrum_-6" data-name="Light Spectrum " x1="46.25" y1="28.3" x2="47.8" y2="28.3" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-6" data-name="Red Violet" x1="44.85" y1="26.32" x2="49.19" y2="26.32" xlink:href="#Red_Violet"/>
+    <linearGradient id="Light_Spectrum_-7" data-name="Light Spectrum " x1="51.67" y1="33.1" x2="53.21" y2="33.1" xlink:href="#Light_Spectrum_"/>
+    <linearGradient id="Red_Violet-7" data-name="Red Violet" x1="50.27" y1="32.23" x2="54.61" y2="32.23" xlink:href="#Red_Violet"/>
+    <linearGradient id="Violet-3" data-name="Violet" x1="82.56" y1="48.37" x2="163.73" y2="48.37" xlink:href="#Violet"/>
+  </defs>
+  <g id="OBJECTS">
+    <g>
+      <g class="cls-17">
+        <rect class="cls-3" x="74.87" y="9.26" width="143.42" height="27.03"/>
+      </g>
+      <path class="cls-23" d="M71.51,34.44C71.51,15.69,55.71,.39,36.13,0h0c-.13,0-.25,0-.38,0-.13,0-.25,0-.38,0h0C15.8,.39,0,15.69,0,34.44v19.91c0,6.28,5.34,11.37,11.93,11.37h4.86c3.33,0,6.04-2.58,6.04-5.75v-11.86c0-3.18-2.7-5.75-6.04-5.75H8.23v-7.91c0-14.54,12.32-26.39,27.53-26.59,15.21,.19,27.53,12.04,27.53,26.59v7.91h-8.57c-3.33,0-6.04,2.58-6.04,5.75v11.86c0,3.18,2.7,5.75,6.04,5.75h4.86c6.59,0,11.93-5.09,11.93-11.37v-9.85h0v-10.06Z"/>
+      <rect class="cls-13" x="19.16" y="25.66" width="1.55" height="13.88" rx=".62" ry=".62"/>
+      <rect class="cls-16" x="17.76" y="34.38" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-12" x="24.58" y="20.21" width="1.55" height="18.15" rx=".62" ry=".62"/>
+      <rect class="cls-5" x="23.18" y="29.28" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-19" x="29.99" y="11.96" width="1.55" height="22.86" rx=".62" ry=".62"/>
+      <rect class="cls-8" x="28.6" y="21.89" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-22" x="35.41" y="14.97" width="1.55" height="25.75" rx=".62" ry=".62"/>
+      <rect class="cls-7" x="34.02" y="35.56" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-1" x="40.83" y="13.1" width="1.55" height="24.08" rx=".62" ry=".62"/>
+      <rect class="cls-21" x="39.44" y="17.06" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-18" x="46.25" y="18.24" width="1.55" height="20.12" rx=".62" ry=".62"/>
+      <rect class="cls-20" x="44.85" y="25.43" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-14" x="51.67" y="26.66" width="1.55" height="12.87" rx=".62" ry=".62"/>
+      <rect class="cls-6" x="50.27" y="31.35" width="4.33" height="1.77" rx=".75" ry=".75"/>
+      <rect class="cls-9" x="82.56" y="39.54" width="81.17" height="17.66"/>
+      <text class="cls-11" transform="translate(86.08 54.53)"><tspan class="cls-15" x="0" y="0">TR</tspan><tspan class="cls-2" x="21.7" y="0">A</tspan><tspan class="cls-4" x="33.39" y="0">CKER</tspan></text>
+    </g>
+  </g>
+</svg>

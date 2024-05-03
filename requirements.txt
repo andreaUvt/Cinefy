@@ -13,3 +13,5 @@
 ###
 
 django
+requests
+pillow

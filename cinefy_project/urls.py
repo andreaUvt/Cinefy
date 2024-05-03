@@ -17,16 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.http import HttpResponse
-
-def homepageTEMP(request):
-    return HttpResponse("Homepage")
+from .views import Homepage
 
 
-
- 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', homepageTEMP, name="home"),
+    path('', Homepage, name="home"),
     path('', include('cinefy_app.urls')),
-
 ]
