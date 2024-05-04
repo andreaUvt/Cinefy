@@ -14,11 +14,11 @@
             <div class="toggle-menu__lines"></div>
           </label>
           <ul class="header__menu">
-            <li class="header__menuItem"><a href="{% url 'home' %}">Chatbot</a></li>
-            <li class="header__menuItem"><a href="{% url 'home' %}">Movies</a></li>
+            <li class="header__menuItem"><a href="{% url 'chatbot' %}">Chatbot</a></li>
+            <li class="header__menuItem"><a href="{% url 'movies' %}">Movies</a></li>
             {% if request.user.is_authenticated %}
-            <li class="header__menuItem"><a href="{% url 'home' %}">Watchlist</a></li>
-            <li class="header__menuItem"><a href="{% url 'home' %}">Watched</a></li>
+            <li class="header__menuItem"><a href="{% url 'watchlist' %}">Watchlist</a></li>
+            <li class="header__menuItem"><a href="{% url 'watched' %}">Watched</a></li>
             <li class="header__menuItem"><a href="{% url 'home' %}">My Account</a></li>
             <li class="header__menuItem"><a href="{% url 'logout' %}" class="btn btn--sub">Logout</a></li>
             {% else %}

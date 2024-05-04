@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 268.95 268.94">
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1059.26 268.94">
   <defs>
     <style>
       .cls-1 {
@@ -7,10 +7,16 @@
       }
 
       .cls-2 {
-        fill: url(#linear-gradient-3);
+        fill: #bcbec0;
+        font-family: BladeRunnerMovieFont, 'Blade Runner Movie Font';
+        font-size: 188.09px;
       }
 
       .cls-3 {
+        fill: url(#linear-gradient-3);
+      }
+
+      .cls-4 {
         fill: url(#linear-gradient);
       }
     </style>
@@ -23,9 +29,10 @@
   </defs>
   <g id="Layer_1-2" data-name="Layer 1">
     <g>
-      <path class="cls-3" d="m256.03,77.35l-123.04,40.51L74.04,14.51C92.24,5.31,112.72,0,134.48,0c53.7,0,100.02,31.72,121.55,77.35Z"/>
+      <path class="cls-4" d="m256.03,77.35l-123.04,40.51L74.04,14.51C92.24,5.31,112.72,0,134.48,0c53.7,0,100.02,31.72,121.55,77.35Z"/>
       <path class="cls-1" d="m0,134.47C0,91.95,19.88,54.07,50.78,29.41l61.44,107.71-19.5,125.09C38.97,244.6,0,194.04,0,134.47Z"/>
-      <path class="cls-2" d="m134.48,268.94c-5,0-9.9-.32-14.75-.85l19.21-123.15,126.25-41.54c2.37,9.99,3.76,20.36,3.76,31.07,0,74.15-60.32,134.47-134.47,134.47Z"/>
+      <path class="cls-3" d="m134.48,268.94c-5,0-9.9-.32-14.75-.85l19.21-123.15,126.25-41.54c2.37,9.99,3.76,20.36,3.76,31.07,0,74.15-60.32,134.47-134.47,134.47Z"/>
     </g>
+    <text class="cls-2" transform="translate(312.72 198.78)"><tspan x="0" y="0">Cinefy</tspan></text>
   </g>
 </svg>

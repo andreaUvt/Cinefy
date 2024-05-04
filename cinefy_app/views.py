@@ -1,13 +1,22 @@
 from django.shortcuts import render
 from django import views
 from .api import TMDBService
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def moviesTEMP(request):
+def movies(request):
     return render(request, 'cinefy_app/movies.html')
 
-def movieTEMP(request, pk):
+def movie(request, pk):
     return render(request, 'cinefy_app/movie.html')
+
+@login_required(login_url='login')
+def watchlist(request):
+    return render(request, 'cinefy_app/watchlist.html')
+
+@login_required(login_url='login')
+def watched(request):
+    return render(request, 'cinefy_app/watched.html')
 
 def search_movies(request):
     if request.method == 'POST':
