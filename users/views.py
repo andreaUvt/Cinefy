@@ -93,10 +93,12 @@ def registerUser(request):
             user.username = user.username.lower()
             user.is_active=False
             user.save()
+            errors=form.errors
 
             activateEmail(request, user, form.cleaned_data.get('email'))
             return redirect('/')
         else:
-            messages.error(request, 'An error has occurred during registration')
+            for error in errors:
+                messages.error(request, f'Error {error}')
             
     return render(request,'users/login_register.html',context)
