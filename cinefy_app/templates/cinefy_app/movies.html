@@ -1,6 +1,92 @@
-{% extends 'main.html' %}
-{% block content %}
+{% extends "main.html" %}
 
-<h1>Lista filme</h1>
+
+
+{% block content %}
+</head>
+<body>
+  <style>
+    .column {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .card.project {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      width: 350px; 
+      height: 500px; 
+      border: 1px solid #ccc; 
+      border-radius: 10px; 
+      overflow: hidden; 
+    }
+  
+    .project__thumbnail {
+      width: 100%; 
+      height: auto; 
+      border-bottom: 1px solid #ccc; 
+    }
+  
+    .card__body {
+      padding: 10px; 
+      overflow: hidden; 
+    }
+  
+    .project__title {
+      margin-bottom: 5px; 
+    }
+  </style>
+  
+  <!-- Main Section -->
+  <main class="projects">
+    <section class="hero-section text-center">
+      <div class="container container--narrow">
+        <div class="hero-section__box">
+          <h2>Search for <span>Movies</span></h2>
+        </div>
+
+        <div class="hero-section__search">
+          <form id="searchForm" class="form" action="{% url 'movies' %}" method="get">
+            <div class="form__field">
+              <label for="formInput#search"> </label>
+              <input class="input input--text" id="formInput#search" type="text" name="search_movie"
+               value="{{search_movie}}" placeholder="Search by Movie Title" />
+            </div>
+
+            <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- Search Result: DevList -->
+    <section class="projectsList">
+      <div class="container">
+        <div class="grid grid--three">
+
+        {% for movie in allmovies %}
+          <div class="column">
+            <div class="card project">
+              <a href="{% url 'movie' movie.id %}" class="project">
+                <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                <div class="card__body">
+                  <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                  <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>      
+          {% endfor %}  
+
+        </div>
+      </div>
+    </section>
+
+    {% include 'pagination.html' with queryset=allmovies custom_range=custom_range%}
+
+  </main>
+</body>
 
 {% endblock content %}
