@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from users.models import Profile
 
 # Create your models here.
 
@@ -34,3 +35,19 @@ class Movie(models.Model):
     def __str__(self):
         return str(self.title)
     
+class Watchlist(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True,editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.owner.username + "-" + self.movie.title
+
+class Watched(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True,editable=False)
+    created = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.owner.username + "-" + self.movie.title

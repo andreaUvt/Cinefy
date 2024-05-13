@@ -13,7 +13,12 @@
           </div>
           <img class="card__image" src="{{tmdb_image_path}}{{movie.poster_path}}" />
           </a>
-
+          <br>
+          <form method="post" action="{% url 'movie' movie.id%}">
+          {% csrf_token %}
+          <input class="btn btn--sub btn--lg" type="submit" name="add_movie" value="+ Watchlist" style="margin-right: 65px;" />
+          <input class="btn btn--sub btn--lg" type="submit" name="add_movie" value="+ Seen" />
+        </form>
         </div>
 
         <div class="column column--2of3">
