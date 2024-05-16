@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.http import HttpResponse
-from .views import Homepage,Chatbot
+from .views import Homepage,query_view
 
 from django.contrib.auth import views as auth_views
 
@@ -26,7 +26,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Homepage, name="home"),
-    path('chatbot/', Chatbot, name="chatbot"),
+    path('chatbot/', query_view, name="chatbot"),
     path('', include('cinefy_app.urls')),
     path('',include('users.urls')),
 

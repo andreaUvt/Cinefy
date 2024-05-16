@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from django import views
 from .api import TMDBService
 from django.contrib.auth.decorators import login_required
@@ -18,39 +18,45 @@ def movies(request):
     
     return render(request, 'cinefy_app/movies.html',context)
 
+
 def movie(request, pk):
     if request.user.is_authenticated:
         profile = request.user.profile
         movie = Movie.objects.get(id=pk)
         if request.method == 'POST':
-            action = request.POST['add_movie']
+            action = request.POST.get('action') 
             if action == "+ Seen":
-                if Watched.objects.filter(owner=profile, movie=movie).exists():
-                    pass
-                else:
-                    toSave = Watched(owner=profile,movie=movie)
-                    toSave.save()
-                movie=Movie.objects.get(id=pk)
-                tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-                context = {'movie':movie,'tmdb_image_path':tmdb_image_path}
-                return render(request, 'cinefy_app/movie.html',context)
+                if not Watched.objects.filter(owner=profile, movie=movie).exists():
+                    Watched.objects.create(owner=profile, movie=movie)
             elif action == "+ Watchlist":
-                if Watchlist.objects.filter(owner=profile, movie=movie).exists():
-                    pass
-                else:
-                    toSave = Watchlist(owner=profile,movie=movie)
-                    toSave.save()
-                movie=Movie.objects.get(id=pk)
-                tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-                context = {'movie':movie,'tmdb_image_path':tmdb_image_path}
-                return render(request, 'cinefy_app/movie.html',context)
+                if not Watchlist.objects.filter(owner=profile, movie=movie).exists():
+                    Watchlist.objects.create(owner=profile, movie=movie)
+                    
+            elif action == "Delete":
+                if not Watchlist.objects.filter(owner=profile, movie=movie).exists():
+                    Watchlist.objects.delete(owner=profile,movie=movie)
+                    print("Delete")
 
+        tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path}
+        return render(request, 'cinefy_app/movie.html', context)
+    else:
+        movie = get_object_or_404(Movie, id=pk)
+        tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path}
+        return render(request, 'cinefy_app/movie.html', context)
 
-        else:
-            movie=Movie.objects.get(id=pk)
-            tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-            context = {'movie':movie,'tmdb_image_path':tmdb_image_path}
-            return render(request, 'cinefy_app/movie.html',context)
+def delete_from_watchlist(request, pk):
+    profile = request.user.profile
+    movie = get_object_or_404(Movie, id=pk)
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == "Delete":
+            must_delete = Watchlist.objects.filter(owner=profile, movie=movie).first()
+            if must_delete:
+                must_delete.delete()
+    return redirect('watchlist')
+    
 
 @login_required(login_url='login')
 def watchlist(request):
