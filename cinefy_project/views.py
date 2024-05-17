@@ -27,7 +27,7 @@ def get_completion(prompt):
   
 def query_view(request): 
     
-    if request.method == 'GET': 
+    if request.method == 'POST': 
         prompt = request.POST.get('prompt') 
         response = get_completion(prompt) 
         return JsonResponse({'response': response}) 
