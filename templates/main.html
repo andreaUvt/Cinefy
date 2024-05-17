@@ -21,21 +21,27 @@
     {% include "navbar.html" %}
 
     {% if messages %}
-
-    {% for message in messages %}
-        <div class="alert  alert--{{message.tags}}">
-            <p class="alert__message">{{ message }}</p>
-            <button class="alert__close">x</button>
-        </div>
-
-    {% endfor %}
-
+        {% for message in messages %}
+            <div class="alert  alert--{{message.tags}}">
+                <p class="alert__message">{{ message }}</p>
+                <button class="alert__close">x</button>
+            </div>
+        {% endfor %}
     {% endif %}
     
     {% block content %}
-
-
     {% endblock content %}
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>Credits:</p>
+            <ul>
+                <li>Data provided by <a href="https://www.themoviedb.org/" target="_blank">TMDb</a> and <a href="https://trakt.tv/" target="_blank">Trakt.tv</a></li>
+                <li>AI assistance by <a href="https://www.openai.com/" target="_blank">OpenAI</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
-<script src="{% static 'uikit/app.js' %}"></script>
+<script src="{% static 'uikit/footer.js' %}"></script>
 </html>
