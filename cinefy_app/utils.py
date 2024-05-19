@@ -146,6 +146,7 @@ def tmdbpopular():
         else:
             raise ValueError("TMDB_KEY not found in secrets.txt")
 
+<<<<<<< HEAD
     for i in range(1,10):
         url = f"https://api.themoviedb.org/3/movie/popular?language=en-US&page={i}"
 
@@ -164,6 +165,25 @@ def tmdbpopular():
         data = json.loads(response.read().decode('utf-8'))
         for movie in data.get('results',[]):
             saveMovie(movie)
+=======
+    url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=10"
+
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {KEY}"
+    }
+
+    request = Request(url, headers=headers)
+    response = urlopen(request)
+            
+    if response.getcode() != 200:
+        print("API response error tmdb, not 200")
+        quit()
+          
+    data = json.loads(response.read().decode('utf-8'))
+    for movie in data.get('results',[]):
+        saveMovie(movie)
+>>>>>>> 61773ff804a69bf7d15093be2569a01a56d23205
 
 def searchMovie(request): # Search for podcasts by title
     search_movie = ""
