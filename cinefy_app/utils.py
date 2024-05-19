@@ -137,6 +137,34 @@ def tmdbtrending():
     for movie in data.get('results',[]):
         saveMovie(movie)
 
+def tmdbpopular():
+    with open('secrets.txt', 'r') as file:
+        for line in file:
+            if line.startswith('TMDB_KEY='):
+                KEY=( line[len('TMDB_KEY='):].strip())
+                break
+        else:
+            raise ValueError("TMDB_KEY not found in secrets.txt")
+
+    for i in range(1,10):
+        url = f"https://api.themoviedb.org/3/movie/popular?language=en-US&page={i}"
+
+        headers = {
+            "accept": "application/json",
+            "Authorization": f"Bearer {KEY}"
+        }
+
+        request = Request(url, headers=headers)
+        response = urlopen(request)
+                
+        if response.getcode() != 200:
+            print("API response error tmdb, not 200")
+            quit()
+            
+        data = json.loads(response.read().decode('utf-8'))
+        for movie in data.get('results',[]):
+            saveMovie(movie)
+
 def searchMovie(request): # Search for podcasts by title
     search_movie = ""
 
