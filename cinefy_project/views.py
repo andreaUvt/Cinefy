@@ -1,11 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import openai
+from django.contrib.auth.decorators import login_required
 from django import views
+from cinefy_app.models import Genre, Movie
+from cinefy_app.utils import tmdbtrending, tmdbpopular
 
 
 
 def Homepage(request):
+    genres = Genre.objects.all()
+    genre_movies = {genre.name: genre.movie_set.all()[:10] for genre in genres}
+    tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+    context = {
+        'genre_movies': genre_movies,
+        'tmdb_image_path': tmdb_image_path
+    }
     return render(request, 'home.html')
 
 
@@ -24,7 +34,8 @@ def get_completion(prompt):
     print("Response:", response) 
     return response 
   
-  
+
+@login_required(login_url='login')
 def query_view(request): 
     
     if request.method == 'POST': 
