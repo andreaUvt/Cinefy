@@ -1,7 +1,48 @@
-{% extends 'main.html' %}
-{% block content %}
+{% extends "main.html" %}
 
-<h1>Homepage Cinefy</h1>
+{% block content %}
+<style>
+    .horizontal-scroll {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+    }
+    .horizontal-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    .movie-card {
+        flex: 0 0 auto;
+        width: 150px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+    }
+    .movie-card img {
+        width: 100%;
+    }
+</style>
+
+<main>
+    {% for genre, movies in genre_movies.items %}
+    <section>
+        <h2>{{ genre }} Movies</h2>
+        <div class="horizontal-scroll">
+            {% if movies %}
+                {% for movie in movies %}
+                <div class="movie-card">
+                    <a href="{% url 'movie' movie.id %}">
+                        <img src="{{ tmdb_image_path }}{{ movie.poster_path }}" alt="{{ movie.title }}">
+                        <h3>{{ movie.title }}</h3>
+                    </a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No movies found for this genre.</p>
+            {% endif %}
+        </div>
+    </section>
+    {% endfor %}
+</main>
 
 {% endblock content %}
-

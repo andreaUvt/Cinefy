@@ -1,0 +1,48 @@
+{% load static %}
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="container container--narrow">
+        <div class="footer__content">
+            <p class="footer__credits">Credits:</p>
+            <ul class="footer__menu">
+                <li class="footer__menuItem">
+                    Data provided by <a href="https://www.themoviedb.org/" target="_blank" class="footer__link">TMDb</a> and <a href="https://trakt.tv/" target="_blank" class="footer__link">Trakt.tv</a>
+                </li>
+                <li class="footer__menuItem">
+                    AI assistance by <a href="https://www.openai.com/" target="_blank" class="footer__link">OpenAI</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<style>
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+.footer__content {
+    text-align: center;
+}
+.footer__credits {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+.footer__menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer__menuItem {
+    margin-bottom: 5px;
+}
+.footer__link {
+    color: #fff;
+    text-decoration: none;
+}
+.footer__link:hover {
+    text-decoration: underline;
+}
+</style>
