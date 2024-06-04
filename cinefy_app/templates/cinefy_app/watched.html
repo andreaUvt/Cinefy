@@ -3,8 +3,7 @@
 
 
 {% block content %}
-</head>
-<body>
+
   <style>
     .column {
       display: flex;
@@ -21,6 +20,7 @@
       border: 1px solid #ccc; 
       border-radius: 10px; 
       overflow: hidden; 
+      position: relative; /* Add this */
     }
   
     .project__thumbnail {
@@ -36,6 +36,21 @@
   
     .project__title {
       margin-bottom: 5px; 
+    }
+  
+    .delete-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: none; /* Hidden by default */
+    }
+  
+    .card.project:hover .delete-button {
+      display: block; /* Show on hover */
     }
   </style>
   
@@ -54,6 +69,10 @@
                   </p>
                 </div>
               </a>
+              <form method="post" action="{% url 'delete_from_watched' movie.id %}">
+                {% csrf_token %}
+                <button class="delete-button" type="submit" name="action" value="Delete">Delete</button>
+              </form>
             </div>
           </div>      
           {% endfor %}  
@@ -63,8 +82,5 @@
     </section>
 
     {% include 'pagination.html' with queryset=allmovies custom_range=custom_range%}
-
-  </main>
-</body>
 
 {% endblock content %}

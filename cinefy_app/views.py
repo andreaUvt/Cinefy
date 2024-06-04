@@ -58,6 +58,18 @@ def delete_from_watchlist(request, pk):
     return redirect('watchlist')
     
 
+def delete_from_watched(request,pk):
+    profile = request.user.profile
+    movie= get_object_or_404(Movie,id=pk)
+    if request.method== 'POST':
+        action = request.POST.get('action')
+        if action =="Delete":
+            must_delete = Watched.objects.filter(owner=profile, movie=movie).first()
+            if must_delete:
+                must_delete.delete()
+    return redirect('watched')
+
+
 @login_required(login_url='login')
 def watchlist(request):
     profile = request.user.profile
@@ -72,4 +84,4 @@ def watched(request):
     movies_for_profile = Movie.objects.filter(watched__owner_id=profile.id)
     tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
     context = {'allmovies':movies_for_profile,'tmdb_image_path':tmdb_image_path}
-    return render(request, 'cinefy_app/watchlist.html',context)
+    return render(request, 'cinefy_app/watched.html',context)
