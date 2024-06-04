@@ -2,6 +2,37 @@
 
 {% block content %}
 <style>
+    .column {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .card.project {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      width: 262px; 
+      height: 375px; 
+      border: 1px solid #ccc; 
+      border-radius: 10px; 
+      overflow: hidden; 
+    }
+  
+    .project__thumbnail {
+      width: 100%; 
+      height: auto; 
+      border-bottom: 1px solid #ccc; 
+    }
+  
+    .card__body {
+      padding: 10px; 
+      overflow: hidden; 
+    }
+  
+    .project__title {
+      margin-bottom: 5px; 
+    }
     .horizontal-scroll {
         display: flex;
         overflow-x: auto;
@@ -21,28 +52,241 @@
     .movie-card img {
         width: 100%;
     }
+    .wrapper{
+        max-height: 400px;
+        border: 1px solid #ddd;
+        display: flex;
+        overflow-x: auto;
+    }
+
+    .wrapper::-webkit-scrollbar{
+        width: 0;
+    }
+
+    .wrapper .item{
+        min-width: 300px;
+        height: 380px;
+        line-height: 110px;
+        margin-right: 2px;
+    }
+
 </style>
 
 <main>
-    {% for genre, movies in genre_movies.items %}
-    <section>
-        <h2>{{ genre }} Movies</h2>
-        <div class="horizontal-scroll">
-            {% if movies %}
-                {% for movie in movies %}
-                <div class="movie-card">
-                    <a href="{% url 'movie' movie.id %}">
-                        <img src="{{ tmdb_image_path }}{{ movie.poster_path }}" alt="{{ movie.title }}">
-                        <h3>{{ movie.title }}</h3>
-                    </a>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p>No movies found for this genre.</p>
-            {% endif %}
+    <section class="projectsList">
+        <h1>Animatie</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_animatie %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
         </div>
-    </section>
-    {% endfor %}
+        
+        <h1>Actiune</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_actiune %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Aventura</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_aventura %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Comedie</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_comedie %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Drama</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_drama %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Fantasy</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_fantasy %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Horror</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_horror %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Mister</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_mister %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Romantic</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_romantic %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Sci-Fi</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_sf %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+        <h1>Thriller</h1>
+        <div class="wrapper">
+  
+          {% for movie in filme_thriller %}
+            <div class="item">
+              <div class="card project">
+                <a href="{% url 'movie' movie.id %}" class="project">
+                  <img class="project__thumbnail" src="{{tmdb_image_path}}{{movie.poster_path}}" alt="project thumbnail" />
+                  <div class="card__body">
+                    <h3 class="project__title">{{movie.title|slice:35}}</h3>
+                    <p><a class="project__author">{{ movie.description|truncatechars:125 }}</a></p>
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>      
+            {% endfor %}  
+  
+        </div>
+
+        
+      </section>
 </main>
 
 {% endblock content %}

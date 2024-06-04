@@ -10,14 +10,52 @@ from .utils import extract_groq_key
 
 
 def Homepage(request):
-    genres = Genre.objects.all()
-    genre_movies = {genre.name: genre.movie_set.all()[:10] for genre in genres}
-    tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-    context = {
-        'genre_movies': genre_movies,
-        'tmdb_image_path': tmdb_image_path
-    }
-    return render(request, 'home.html')
+
+    # Presupunem că avem un model Genre și un model Movie deja definit
+
+    # Obținerea obiectelor de genuri
+    animatie = Genre.objects.get(name="Animation")
+    actiune = Genre.objects.get(name="Action")
+    aventura = Genre.objects.get(name="Adventure")
+    comedie = Genre.objects.get(name="Comedy")
+    drama = Genre.objects.get(name="Drama")
+    fantasy = Genre.objects.get(name="Fantasy")
+    horror = Genre.objects.get(name="Horror")
+    mister = Genre.objects.get(name="Mystery")
+    romantic = Genre.objects.get(name="Romance")
+    sf = Genre.objects.get(name="Science Fiction")
+    thriller = Genre.objects.get(name="Thriller")
+
+    # Filtrarea filmelor după genuri
+    filme_animatie = Movie.objects.filter(genres=animatie)
+    filme_actiune = Movie.objects.filter(genres=actiune)
+    filme_aventura = Movie.objects.filter(genres=aventura)
+    filme_comedie = Movie.objects.filter(genres=comedie)
+    filme_drama = Movie.objects.filter(genres=drama)
+    filme_fantasy = Movie.objects.filter(genres=fantasy)
+    filme_horror = Movie.objects.filter(genres=horror)
+    filme_mister = Movie.objects.filter(genres=mister)
+    filme_romantic = Movie.objects.filter(genres=romantic)
+    filme_sf = Movie.objects.filter(genres=sf)
+    filme_thriller = Movie.objects.filter(genres=thriller)
+
+    tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
+
+    
+    return render(request, 'home.html', {
+    'filme_animatie': filme_animatie,
+    'filme_actiune': filme_actiune,
+    'filme_aventura': filme_aventura,
+    'filme_comedie': filme_comedie,
+    'filme_drama': filme_drama,
+    'filme_fantasy': filme_fantasy,
+    'filme_horror': filme_horror,
+    'filme_mister': filme_mister,
+    'filme_romantic': filme_romantic,
+    'filme_sf': filme_sf,
+    'filme_thriller': filme_thriller,
+    'tmdb_image_path': tmdb_image_path
+})
 
 @login_required(login_url="login")
 def chatbot(request):
