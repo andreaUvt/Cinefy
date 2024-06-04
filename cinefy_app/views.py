@@ -11,7 +11,7 @@ def movies(request):
 
     allmovies, search_movie=searchMovie(request)
 
-    numberOfResultsPerPage=9
+    numberOfResultsPerPage=27
     custom_range, allmovies = paginateMovies(request,allmovies,numberOfResultsPerPage)
     tmdb_image_path="https://image.tmdb.org/t/p/w600_and_h900_bestv2"
     context={'allmovies': allmovies, 'search_movie':search_movie, 'custom_range':custom_range, 'tmdb_image_path':tmdb_image_path}

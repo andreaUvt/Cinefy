@@ -146,7 +146,7 @@ def tmdbpopular():
         else:
             raise ValueError("TMDB_KEY not found in secrets.txt")
 
-    for i in range(1,10):
+    for i in range(1,200):
         url = f"https://api.themoviedb.org/3/movie/popular?language=en-US&page={i}"
 
         headers = {
@@ -165,7 +165,7 @@ def tmdbpopular():
         for movie in data.get('results',[]):
             saveMovie(movie)
 
-def searchMovie(request): # Search for podcasts by title
+def searchMovie(request): # Search for movie by title
     search_movie = ""
 
     if request.GET.get('search_movie'):
@@ -174,7 +174,7 @@ def searchMovie(request): # Search for podcasts by title
     allmovies= Movie.objects.filter(title__icontains=search_movie)
     return allmovies, search_movie
 
-def paginateMovies(request, allmovies, results): # Paginator for podcasts
+def paginateMovies(request, allmovies, results): # Paginator for movies
 
     page = request.GET.get('page')
     paginator = Paginator(allmovies, results)

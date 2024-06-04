@@ -103,3 +103,17 @@ def registerUser(request):
                 
             
     return render(request,'users/login_register.html',context)
+
+
+@login_required(login_url='login')
+def myAccount(request):
+    user=request.user
+    allwatched=...
+    allwathec_count=...
+    #genres
+
+    #stats
+
+    profile=request.user.profile
+    context={'username':profile.username,}
+    return render(request, 'users/myaccount.html', context)
