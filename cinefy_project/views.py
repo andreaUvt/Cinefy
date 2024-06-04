@@ -4,7 +4,8 @@ import openai
 from django.contrib.auth.decorators import login_required
 from django import views
 from cinefy_app.models import Genre, Movie
-from cinefy_app.utils import tmdbtrending, tmdbpopular
+from groq import Groq
+from .utils import extract_groq_key
 
 
 
@@ -18,29 +19,52 @@ def Homepage(request):
     }
     return render(request, 'home.html')
 
+def chatbot(request):
+    if request.user.is_authenticated:
+        username=request.user.username
+        key=extract_groq_key("secrets.txt")
+    if key is None:
+        print("Groq api KEY ERROR. Check secrets.txt")
+        quit()
 
-def get_completion(prompt): 
-    print(prompt) 
-    query = openai.Completion.create( 
-        model="gpt-3.5-turbo-0125", 
-        prompt=prompt, 
-        max_tokens=100, 
-        n=1, 
-        stop=None, 
-        temperature=0.5, 
-    ) 
-  
-    response = query.choices[0].text 
-    print("Response:", response) 
-    return response 
-  
+    client = Groq(
+        api_key=key
+    )
 
-@login_required(login_url='login')
-def query_view(request): 
-    
-    if request.method == 'POST': 
-        prompt = request.POST.get('prompt') 
-        response = get_completion(prompt) 
-        return JsonResponse({'response': response}) 
-    
-    return render(request, 'chatbot.html') 
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 3."
+            }
+        ],
+        model="llama3-8b-8192",
+    )
+    chat_completion.choices[0].message.content
+    return render(request,"chatbot.html",context={'username':username})
+
+def getResponse(request):
+    userMessage=request.GET.get('userMessage')
+
+    key=extract_groq_key("secrets.txt")
+    if key is None:
+        print("Groq api KEY ERROR. Check secrets.txt")
+        quit()
+
+    client = Groq(
+        api_key=key
+    )
+
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": userMessage
+            }
+        ],
+        model="llama3-8b-8192",
+    )
+
+    response=chat_completion.choices[0].message.content
+
+    return HttpResponse(response)

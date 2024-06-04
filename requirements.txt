@@ -16,4 +16,4 @@ django
 requests
 pillow
 six
-openai
+groq
