@@ -52,9 +52,8 @@
         font-size: 14px;
         line-height: 25px;
         text-align: right;
-        color: grey;    }
-
-
+        color: grey;
+    }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
@@ -62,43 +61,47 @@
 
 <div>
     <div id="chatbot">
-        <p class="botText"><span>Hello {{username}}. You can chat with me about movies!</span></p>
+        <!-- Initial message -->
+        <p class="botText"><span>Hello {{ username }}. You can chat with me about movies!</span></p>
     </div>
 
     <div id="userInput">
         <input type="text" id="textInput" name="userMessage" placeholder="Type your message..."/>
         <input type="submit" value="Send" id="buttonInput"/>
-        
     </div>
 </div>
 
 <script>
-
     function getUserResponse(){
-        var userText= $('#textInput').val();
-        var userHTML = "<p class='userText'>You: <span>"+userText+"</span></p>";
+        var userText = $('#textInput').val();
+        var userHTML = "<p class='userText'>You: <span>" + userText + "</span></p>";
         $('#textInput').val("");
+        $('#chatbot').append(userHTML);
 
-        $('#chatbot').append(userHTML); 
-
-
-        $.get('/getResponse',{userMessage:userText}).done(function(data){
-            
-            var returnedMessage = "<p class='botText'>CinefyGROQ: <span>"+data+"</span></p>"
+        $.get('/getResponse', {userMessage: userText}).done(function(data){
+            var returnedMessage = "<p class='botText'>CinefyGROQ: <span>" + data + "</span></p>";
             $('#chatbot').append(returnedMessage);
-
-        })
-
+        });
     }
 
     $('#buttonInput').click(function(){
         getUserResponse();
-    })
+    });
 
     $('#textInput').keydown(function(event) {
         if (event.keyCode === 13) {
             getUserResponse();
         }
+    });
+
+    $(document).ready(function(){
+        $.get('/getConversationHistory').done(function(data){
+            data.forEach(function(message){
+                var messageHTML = message.role === 'user' ? "<p class='userText'>You: <span>" + message.content + "</span></p>" :
+                    "<p class='botText'>CinefyGROQ: <span>" + message.content + "</span></p>";
+                $('#chatbot').append(messageHTML);
+            });
+        });
     });
 </script>
 

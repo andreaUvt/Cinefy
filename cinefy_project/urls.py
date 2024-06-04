@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.http import HttpResponse
-from .views import Homepage,chatbot,getResponse
+from .views import Homepage,chatbot,getResponse,get_conversation_history
 
 from django.contrib.auth import views as auth_views
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('cinefy_app.urls')),
     path('',include('users.urls')),
     path('getResponse',getResponse,name="getResponse"),
+    path('getConversationHistory/', get_conversation_history, name='getConversationHistory'),
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="reset_password.html"),
          name="reset_password"),

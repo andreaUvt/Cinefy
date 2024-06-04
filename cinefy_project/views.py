@@ -19,52 +19,53 @@ def Homepage(request):
     }
     return render(request, 'home.html')
 
+@login_required(login_url="login")
 def chatbot(request):
-    if request.user.is_authenticated:
-        username=request.user.username
-        key=extract_groq_key("secrets.txt")
+    if not request.user.is_authenticated:
+        return render(request, "chatbot.html")
+
+    username = request.user.username
+    key = extract_groq_key("secrets.txt")
+
     if key is None:
-        print("Groq api KEY ERROR. Check secrets.txt")
+        print("Groq API KEY ERROR. Check secrets.txt")
         quit()
 
-    client = Groq(
-        api_key=key
-    )
-
-    chat_completion = client.chat.completions.create(
-        messages=[
+    if 'conversation_history' not in request.session:
+        request.session['conversation_history'] = [
             {
                 "role": "user",
-                "content": "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 3."
+                "content": "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 2."
             }
-        ],
-        model="llama3-8b-8192",
-    )
-    chat_completion.choices[0].message.content
-    return render(request,"chatbot.html",context={'username':username})
+        ]
+
+    return render(request, "chatbot.html", context={'username': username})
 
 def getResponse(request):
-    userMessage=request.GET.get('userMessage')
+    userMessage = request.GET.get('userMessage')
+    key = extract_groq_key("secrets.txt")
 
-    key=extract_groq_key("secrets.txt")
     if key is None:
-        print("Groq api KEY ERROR. Check secrets.txt")
+        print("Groq API KEY ERROR. Check secrets.txt")
         quit()
 
-    client = Groq(
-        api_key=key
-    )
+    client = Groq(api_key=key)
+
+    conversation_history = request.session.get('conversation_history', [])
+    conversation_history.append({"role": "user", "content": userMessage})
 
     chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": userMessage
-            }
-        ],
+        messages=conversation_history,
         model="llama3-8b-8192",
     )
 
-    response=chat_completion.choices[0].message.content
+    response = chat_completion.choices[0].message.content
+    conversation_history.append({"role": "assistant", "content": response})
+
+    request.session['conversation_history'] = conversation_history
 
     return HttpResponse(response)
+
+def get_conversation_history(request):
+    conversation_history = request.session.get('conversation_history', [])
+    return JsonResponse(conversation_history, safe=False)
