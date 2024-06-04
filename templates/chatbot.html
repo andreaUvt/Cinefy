@@ -34,7 +34,7 @@
         font-size: 14px;
         width: 60%;
         padding: 16px;
-        color: orange;
+        color: rgb(95, 41, 95);
     }
 
     .userText{
@@ -42,7 +42,7 @@
         font-size: 14px;
         line-height: 25px;
         text-align: right;
-        color: grey;
+        color: rgb(95, 41, 95);
     }
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -86,10 +86,13 @@
 
     $(document).ready(function(){
         $.get('/getConversationHistory').done(function(data){
+            var initialMessage = "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 2.";
             data.forEach(function(message){
-                var messageHTML = message.role === 'user' ? "<p class='userText'>You: <span>" + message.content + "</span></p>" :
-                    "<p class='botText'>CinefyGROQ: <span>" + message.content + "</span></p>";
-                $('#chatbot').append(messageHTML);
+                if (message.role !== 'user' || message.content !== initialMessage) {
+                    var messageHTML = message.role === 'user' ? "<p class='userText'>You: <span>" + message.content + "</span></p>" :
+                        "<p class='botText'>CinefyGROQ: <span>" + message.content + "</span></p>";
+                    $('#chatbot').append(messageHTML);
+                }
             });
         });
     });

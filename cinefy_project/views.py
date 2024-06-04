@@ -73,7 +73,7 @@ def chatbot(request):
         request.session['conversation_history'] = [
             {
                 "role": "user",
-                "content": "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 2."
+                "content": "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 3."
             }
         ]
 
