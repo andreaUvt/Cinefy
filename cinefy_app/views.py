@@ -4,6 +4,7 @@ from .api import TMDBService
 from django.contrib.auth.decorators import login_required
 from .utils import searchMovie,paginateMovies
 from .models import Movie,Genre,Watchlist,Watched
+from django.contrib import messages
 from django.http import HttpResponse
 
 # Create your views here.
@@ -28,9 +29,12 @@ def movie(request, pk):
             if action == "+ Seen":
                 if not Watched.objects.filter(owner=profile, movie=movie).exists():
                     Watched.objects.create(owner=profile, movie=movie)
+                    messages.success(request,"Movie marked as seen")
+                    Watchlist.objects.filter(owner=profile, movie=movie).delete()
             elif action == "+ Watchlist":
                 if not Watchlist.objects.filter(owner=profile, movie=movie).exists():
                     Watchlist.objects.create(owner=profile, movie=movie)
+                    messages.success(request,"Movie added to your watchlist")
                     
             elif action == "Delete":
                 if not Watchlist.objects.filter(owner=profile, movie=movie).exists():
