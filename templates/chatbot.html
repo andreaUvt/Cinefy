@@ -2,7 +2,7 @@
 {% block content %}
 
 <style>
-    #chatbot{
+    #chatbot {
         margin-left: auto;
         margin-right: auto;
         width: 70%;
@@ -10,16 +10,45 @@
         border-radius: 10px;
         border: 1px solid gray;
         padding: 10px;
+        overflow-y: auto;
+        max-height: 500px; 
     }
 
-    .botText{
+    .botText, .userText {
         font-family: monospace;
         font-size: 14px;
-        text-align: left;
         line-height: 25px;
+        word-wrap: break-word;
+        white-space: pre-wrap; 
+        margin: 5px;
+    }
+
+    .botText span, .userText span {
+        max-width: 100%;
+    }
+
+    .botText {
+        text-align: left;
         color: grey;
     }
-    #userInput{
+
+    .userText {
+        text-align: left;
+        color: grey;
+    }
+
+    .userLabel {
+        color: plum; 
+        font-weight:bolder;
+
+    }
+
+    .botLabel {
+        color: green;
+        font-weight: bolder;
+    }
+
+    #userInput {
         margin-left: auto;
         margin-right: auto;
         margin-top: 40px;
@@ -27,32 +56,37 @@
         text-align: center;
     }
 
-    #textInput{
+    #textInput {
         border: 3px solid white;
         border-bottom: 3px solid grey;
         font-family: monospace;
         font-size: 14px;
         width: 60%;
         padding: 16px;
-        color: rgb(95, 41, 95);
+        color: rgb(104, 43, 104);
     }
 
-    .userText{
+    .userText {
         font-family: monospace;
         font-size: 14px;
         line-height: 25px;
-        text-align: right;
-        color: rgb(95, 41, 95);
+        text-align: left;
+        color: grey;
+    }
+
+    h1 {
+        margin-top: 15px;
+        text-align: center;
     }
 </style>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
-<h1>Chatbot App</h1>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<h1>Cinefy</h1>
 
 <div>
     <div id="chatbot">
-        <!-- Initial message -->
-        <p class="botText"><span>Hello {{ username }}. You can chat with me about movies!</span></p>
     </div>
 
     <div id="userInput">
@@ -62,15 +96,21 @@
 </div>
 
 <script>
-    function getUserResponse(){
+    function renderMarkdown(text) {
+        return marked.parse(text);
+    }
+
+    function getUserResponse() {
         var userText = $('#textInput').val();
-        var userHTML = "<p class='userText'>You: <span>" + userText + "</span></p>";
+        var userHTML = "<p class='userText'><span class='userLabel'>You: </span><span>" + renderMarkdown(userText) + "</span></p>";
         $('#textInput').val("");
         $('#chatbot').append(userHTML);
+        scrollToBottom();
 
         $.get('/getResponse', {userMessage: userText}).done(function(data){
-            var returnedMessage = "<p class='botText'>CinefyGROQ: <span>" + data + "</span></p>";
+            var returnedMessage = "<p class='botText'><span class='botLabel'>CinefyGROQ: </span><span>" + renderMarkdown(data) + "</span></p>";
             $('#chatbot').append(returnedMessage);
+            scrollToBottom();
         });
     }
 
@@ -84,16 +124,21 @@
         }
     });
 
+    function scrollToBottom() {
+        $('#chatbot').scrollTop($('#chatbot')[0].scrollHeight);
+    }
+
     $(document).ready(function(){
         $.get('/getConversationHistory').done(function(data){
-            var initialMessage = "Hello from now on I would like to talk to you about movies. My favorite genres are: comedy, horror and action. My favorite movie is Deadpool 2.";
+            var initialMessage = "Hello from now on I would like to talk to you about movies. I like thrillers, action and adventure. You can recommend me any kind of movies and movie genres, be creative and random about what you suggest.";
             data.forEach(function(message){
                 if (message.role !== 'user' || message.content !== initialMessage) {
-                    var messageHTML = message.role === 'user' ? "<p class='userText'>You: <span>" + message.content + "</span></p>" :
-                        "<p class='botText'>CinefyGROQ: <span>" + message.content + "</span></p>";
+                    var messageHTML = message.role === 'user' ? "<p class='userText'><span class='userLabel'>You: </span><span>" + renderMarkdown(message.content) + "</span></p>" :
+                        "<p class='botText'><span class='botLabel'>CinefyGROQ: </span><span>" + renderMarkdown(message.content) + "</span></p>";
                     $('#chatbot').append(messageHTML);
                 }
             });
+            scrollToBottom();
         });
     });
 </script>
