@@ -31,6 +31,7 @@ class Movie(models.Model):
     tmdbid = models.CharField(max_length=100,null=True,blank=True)
     genres = models.ManyToManyField(Genre)
     adult = models.CharField(max_length=100, null=True, blank=True)
+    watchlink = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return str(self.title)

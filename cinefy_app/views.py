@@ -2,10 +2,11 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django import views
 from .api import TMDBService
 from django.contrib.auth.decorators import login_required
-from .utils import searchMovie,paginateMovies
+from .utils import searchMovie,paginateMovies,convert_date_format,convert_minutes
 from .models import Movie,Genre,Watchlist,Watched
 from django.contrib import messages
 from django.http import HttpResponse
+
 
 # Create your views here.
 def movies(request):
@@ -42,12 +43,26 @@ def movie(request, pk):
                     print("Delete")
 
         tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path}
+        watchlink=movie.watchlink
+        if watchlink is None:
+            watchlink=''
+        release_date=convert_date_format(movie.release_date)
+        runtime=convert_minutes(movie.runtime)
+        
+        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path, 'watchlink':watchlink, 'release_date':release_date,'runtime':runtime,}
         return render(request, 'cinefy_app/movie.html', context)
     else:
         movie = get_object_or_404(Movie, id=pk)
         tmdb_image_path = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
-        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path}
+        watchlink=movie.watchlink
+        if watchlink is None:
+            watchlink=''
+        if watchlink.endswith("None"):
+            watchlink=watchlink[:-4]
+        release_date=convert_date_format(movie.release_date)
+        runtime=convert_minutes(movie.runtime)
+        
+        context = {'movie': movie, 'tmdb_image_path': tmdb_image_path, 'watchlink':watchlink, 'release_date':release_date,'runtime':runtime,}
         return render(request, 'cinefy_app/movie.html', context)
 
 def delete_from_watchlist(request, pk):

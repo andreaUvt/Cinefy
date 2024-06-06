@@ -3,6 +3,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 import json
 from django.db.models import Q
+from datetime import datetime
 
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
@@ -81,6 +82,37 @@ def saveMovie(data):
     movie.save()
 
     print(f"Movie saved - id: {data.get('id')}")
+
+def watchproviders():
+    KEY="api_key="
+    with open('secrets.txt', 'r') as file:
+        for line in file:
+            if line.startswith('TMDB_CLIENT_ID='):
+                KEY+=( line[len('TMDB_CLIENT_ID='):].strip())
+                break
+        else:
+            raise ValueError("TMDB_CLIENT_ID not found in secrets.txt")
+
+    
+        movies=Movie.objects.all()
+        for movie in movies:
+
+            url = f"https://api.themoviedb.org/3/movie/{movie.tmdbid}/watch/providers?{KEY}"
+            headers = {
+                "accept": "application/json",
+            }
+
+            request = Request(url, headers=headers)
+            response = urlopen(request)
+                    
+            if response.getcode() != 200:
+                print("API response error tmdb, not 200")
+                quit()
+                
+            data = json.loads(response.read().decode('utf-8'))
+            movie.watchlink=data.get("results", {}).get("RO", {}).get("link", None)
+            movie.save()
+            print(movie.tmdbid + "updated watch provider")
 
 def tmdbtest():
     KEY="api_key="
@@ -201,3 +233,14 @@ def paginateMovies(request, allmovies, results): # Paginator for movies
     custom_range = range(leftIndex,rigtIndex)
 
     return custom_range, allmovies
+
+
+def convert_date_format(date_string):
+    date_object = datetime.strptime(date_string, "%Y-%m-%d")
+    formatted_date = date_object.strftime("%d %B %Y")
+    return formatted_date
+
+def convert_minutes(total_minutes):
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
+    return f"{hours}h {minutes}m"
