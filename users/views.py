@@ -5,6 +5,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import CustomUserCreationForm
 
+import calendar
+
+from django.db.models import Count,Avg
+from django.db.models.functions import ExtractYear,TruncMonth
+
+import plotly.graph_objs as go
+
+
+from collections import Counter
+
+from cinefy_app.models import Movie, Watched,Watchlist, Profile
+
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.utils.encoding import force_bytes, force_str
@@ -105,15 +117,91 @@ def registerUser(request):
     return render(request,'users/login_register.html',context)
 
 
+
 @login_required(login_url='login')
 def myAccount(request):
-    user=request.user
-    allwatched=...
-    allwathec_count=...
-    #genres
+    user = request.user
+    profile = user.profile
+    watchlist = Watchlist.objects.filter(owner=profile)
+    watched = Watched.objects.filter(owner=profile)
+    
+    watchlist_count = watchlist.count()
+    watched_count = watched.count()
 
-    #stats
+    # Calculate total runtime for watchlist and watched movies
+    total_watchlist_runtime = sum((item.movie.runtime or 0) for item in watchlist)
+    total_watched_runtime = sum((item.movie.runtime or 0) for item in watched)
 
-    profile=request.user.profile
-    context={'username':profile.username,}
+    for item in watchlist:
+        print( item.movie.runtime)
+
+    # Calculate most watched genre
+    genres_counter = Counter()
+    for item in watched:
+        for genre in item.movie.genres.all():
+            genres_counter[genre.name] += 1
+    print(genres_counter)
+    most_watched_genre = genres_counter.most_common(1)[0][0] if genres_counter else None
+
+    # Find the longest and shortest movies watched
+    longest_movie = watched.order_by('-movie__runtime').first().movie if watched.exists() else None
+    shortest_movie = watched.order_by('movie__runtime').first().movie if watched.exists() else None
+
+    latest_watchlist_movie = watchlist.order_by('-created').first().movie if watchlist.exists() else None
+
+    # Get the latest movie watched
+    latest_watched_movie = watched.order_by('-created').first().movie if watched.exists() else None
+
+    watchlist_months = watchlist.annotate(month=TruncMonth('created')).values('month').annotate(count=Count('id'))
+    watched_months = watched.annotate(month=TruncMonth('created')).values('month').annotate(count=Count('id'))
+
+    # Get the most active months
+    watchlist_active_months = watchlist_months.order_by('-count')[:3]
+    watched_active_months = watched_months.order_by('-count')[:3]
+
+    # Convert month numbers to month names
+    watchlist_active_months = [(calendar.month_name[month['month'].month], month['count']) for month in watchlist_active_months]
+    watched_active_months = [(calendar.month_name[month['month'].month], month['count']) for month in watched_active_months]
+
+    
+    genres_counter = Counter()
+    for item in watched:
+        for genre in item.movie.genres.all():
+            genres_counter[genre.name] += 1
+
+    # Get top genres and their counts
+    top_genres = [genre[0] for genre in genres_counter.most_common(5)]  # Get top 5 genres
+    genre_counts = [genres_counter[genre] for genre in top_genres]
+
+    # Create Plotly bar chart
+    data = [
+        go.Bar(
+            x=genre_counts,
+            y=top_genres,
+            orientation='h',
+        )
+    ]
+    layout = go.Layout(
+        title='Top Genres of Movies Watched',
+        xaxis=dict(title='Number of Movies'),
+        yaxis=dict(title='Genre'),
+        margin=dict(l=150),  # Adjust left margin for genre labels
+    )
+    fig = go.Figure(data=data, layout=layout)
+
+    context = {
+        'username': profile.username,
+        'watchlist_count': watchlist_count,
+        'watched_count': watched_count,
+        'total_watchlist_runtime': total_watchlist_runtime,
+        'total_watched_runtime': total_watched_runtime,
+        'most_watched_genre': most_watched_genre,
+        'longest_movie': longest_movie,
+        'shortest_movie': shortest_movie,
+        'latest_watchlist_movie': latest_watchlist_movie,
+        'latest_watched_movie': latest_watched_movie,
+        'watchlist_active_months': watchlist_active_months,
+        'watched_active_months': watched_active_months,
+        'plot_div': fig.to_html(full_html=False, include_plotlyjs=False),
+    }
     return render(request, 'users/myaccount.html', context)
