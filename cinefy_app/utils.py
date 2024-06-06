@@ -59,25 +59,25 @@ def saveMovie(data):
         'origin_country': ','.join(data.get('origin_country', [])), 
     }
 
-    genres_data = data.get('genres', [])
-    genres_data2= data.get('genre_ids',[])
+    #genres_data = data.get('genres', [])
+    #genres_data2= data.get('genre_ids',[])
 
-    genres = []
+    #genres = []
 
-    for genreID in genres_data:
-        genreID = genres_data.get('id')
-        genre = Genre.objects.get(id=genreID)
-        genres.append(genre)
+    #for genreID in genres_data:
+        #genreID = genres_data.get('id')
+       # genre = Genre.objects.get(id=genreID)
+        #genres.append(genre)
 
-    for genreID in genres_data2:
-        genre = Genre.objects.get(id=genreID)
-        if genre not in genres:
-            genres.append(genre)
+    #for genreID in genres_data2:
+        #genre = Genre.objects.get(id=genreID)
+       # if genre not in genres:
+        #    genres.append(genre)
 
 
     movie, created = Movie.objects.update_or_create(tmdbid=data.get('id'), defaults=movie_defaults)
     
-    movie.genres.set(genres)
+    #movie.genres.set(genres)
     movie.save()
 
     print(f"Movie saved - id: {data.get('id')}")
@@ -92,22 +92,24 @@ def tmdbtest():
         else:
             raise ValueError("TMDB_CLIENT_ID not found in secrets.txt")
 
-    movie_id=293660
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}?{KEY}"
+    
+        movies=Movie.objects.all()
+        for movie in movies:
 
-    headers = {
-        "accept": "application/json",
-    }
+            url = f"https://api.themoviedb.org/3/movie/{movie.tmdbid}?{KEY}"
+            headers = {
+                "accept": "application/json",
+            }
 
-    request = Request(url, headers=headers)
-    response = urlopen(request)
-            
-    if response.getcode() != 200:
-        print("API response error tmdb, not 200")
-        quit()
-          
-    data = json.loads(response.read().decode('utf-8'))
-    saveMovie(data)
+            request = Request(url, headers=headers)
+            response = urlopen(request)
+                    
+            if response.getcode() != 200:
+                print("API response error tmdb, not 200")
+                quit()
+                
+            data = json.loads(response.read().decode('utf-8'))
+            saveMovie(data)
 
 def tmdbtrending():
     KEY="api_key="
